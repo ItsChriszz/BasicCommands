@@ -1,0 +1,233 @@
+package main;
+
+import org.bukkit.Bukkit;
+import org.bukkit.ChatColor;
+import org.bukkit.GameMode;
+import org.bukkit.command.Command;
+import org.bukkit.command.CommandExecutor;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.java.JavaPlugin;
+
+public class Gamemodes extends JavaPlugin implements CommandExecutor {
+ 
+	@Override
+    public void onEnable() {
+    	System.out.println("essentials enabled");
+    	Bukkit.getPluginManager().registerEvents(new Events(), this);   //join events class name,
+    	this.getCommand("day").setExecutor(new TimeAndWeather());
+    	this.getCommand("night").setExecutor(new TimeAndWeather());
+    	this.getCommand("pweather").setExecutor(new TimeAndWeather());
+    	this.getCommand("ptime").setExecutor(new TimeAndWeather());
+    	this.getCommand("rtp").setExecutor(new Teleportation());
+	}
+
+
+    public boolean onCommand(CommandSender sender, Command cmd, String alias, String[] args) {
+    	Player p = (Player)sender;
+
+    	
+   	 if(cmd.getName().equalsIgnoreCase("gmc")) {   //creative command
+   	  if(args.length == 0) {
+   		if(p.hasPermission("gamemode.gmc")) {
+   			if(p.getGameMode() != GameMode.CREATIVE) {
+   				p.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode changed to Creative");
+   				p.setGameMode(GameMode.CREATIVE);
+   				return true;
+   			}
+   			else {
+   				p.sendMessage(ChatColor.RED + "You are already in Creative");
+   				return false;
+   			}
+   		} 
+   		else {
+   			p.sendMessage(ChatColor.RED + "Error no permission");
+   			return false;
+   		}
+   	  }
+   		
+   		
+   	  	if((args.length == 1)) {   
+   	  	if (sender.isOp() || sender.hasPermission("gamemode.gmc.other")) {
+   	  	Player target = Bukkit.getPlayer(args[0]);
+   	  	if(target != null) {	
+   	  	if(args[0].equalsIgnoreCase(target.getDisplayName())) {
+   	  	if(target.getGameMode() != GameMode.CREATIVE) {
+			p.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode changed for " + target.getDisplayName());
+			target.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode was changed to Creative by " + p.getName());
+			target.setGameMode(GameMode.CREATIVE);
+			return true;
+   	  	}
+		p.sendMessage(ChatColor.RED + target.getName() + " is already in Creative ");
+		return false;
+   	  	}
+   	  		
+   	  	}
+   	  	else {
+   	  	p.sendMessage(ChatColor.RED +  "The specified name Is invalid");
+   	  	return false;
+   	  	}
+   	  	}
+   	  	else {
+			p.sendMessage(ChatColor.RED + "Error no permission");
+			return false;
+   	  	}
+   	 }
+    }
+   	 if(cmd.getName().equalsIgnoreCase("gms")) {   //survival
+      	  if(args.length == 0) {
+      		if(p.hasPermission("gamemode.gms")) {
+      			if(p.getGameMode() != GameMode.SURVIVAL) {
+      				p.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode changed to Survival");
+      				p.setGameMode(GameMode.SURVIVAL);
+      				return true;
+      			}
+      			else {
+      				p.sendMessage(ChatColor.RED + "You are already in Survival");
+      				return false;
+      			}
+      		} 
+      		else {
+      			p.sendMessage(ChatColor.RED + "Error no permission");
+      			return false;
+      		}
+      	  }
+      		
+      		
+      	  	if((args.length == 1)) {   
+      	  	if (sender.isOp() || sender.hasPermission("gamemode.gms.other")) {
+      	  	Player target = Bukkit.getPlayer(args[0]);
+      	  	if(target != null) {	
+      	  	if(args[0].equalsIgnoreCase(target.getDisplayName())) {
+      	  	if(target.getGameMode() != GameMode.SURVIVAL) {
+   			p.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode changed for " + target.getDisplayName());
+   			target.sendMessage(ChatColor.LIGHT_PURPLE + "Gamemode was changed to Survival by " + p.getName());
+   			target.setGameMode(GameMode.SURVIVAL);
+   			return true;
+      	  	}
+   		p.sendMessage(ChatColor.RED + target.getName() + " is already in Survival ");
+   		return false;
+      	  	}
+      	  		
+      	  	}
+      	  	else {
+      	  	p.sendMessage(ChatColor.RED +  "The specified name Is invalid");
+      	  	return false;
+      	  	}
+      	  	}
+      	  	else {
+   			p.sendMessage(ChatColor.RED + "Error no permission");
+   			return false;
+      	  	}
+      	 }
+       }
+   	 
+   	 if(cmd.getName().equalsIgnoreCase("fly")) {   //fly
+     	  if(args.length == 0) {
+     		if(p.hasPermission("StuckInGame.fly")) {
+     			if(!(p.isFlying())) {
+     				p.sendMessage(ChatColor.LIGHT_PURPLE + "Fly has been enabled");
+     				p.setAllowFlight(true);
+     				p.setFlying(true);
+     				return true;
+     			}
+     			else  {
+     				p.setAllowFlight(false);
+     				p.setFlying(false);
+     				p.sendMessage(ChatColor.LIGHT_PURPLE + "Fly has been disabled");
+     				return false;
+     			}
+     		}
+     		else {
+     			p.sendMessage(ChatColor.RED + "Error no permission");
+     			return false;
+     		}
+     	  }
+     		
+     		
+     	  	if((args.length == 1)) {     //fly for target
+     	  	if (sender.isOp() || sender.hasPermission("StuckInGame.fly.other")) {
+     	  	Player target = Bukkit.getPlayer(args[0]);
+     	  	if(target != null) {	
+     	  	if(args[0].equalsIgnoreCase(target.getDisplayName())) {
+     	  	if(!(target.isFlying())) {
+  			p.sendMessage(ChatColor.LIGHT_PURPLE + "set Flight for " + target.getDisplayName());
+  			target.sendMessage(ChatColor.LIGHT_PURPLE + "Flight was enabled by " + p.getName());
+  			target.setAllowFlight(true);
+  			target.setFlying(true);
+     	  	}
+     	  	else if(target.isFlying()) { {
+     	  		p.sendMessage(ChatColor.LIGHT_PURPLE + "Disabled Flight for " + target.getDisplayName());
+     	  		target.sendMessage(ChatColor.LIGHT_PURPLE + "Flight was disabled by " + p.getName());
+     	  		target.setFlying(false);
+     	  		target.setAllowFlight(false);
+     	  		return false;
+     	  	}
+     	  	}
+     	  	}
+     	  	} 
+     	  	else {
+      	  	p.sendMessage(ChatColor.RED +  "The specified name Is invalid");
+      	  	return false;
+     	  	}
+     	  	}
+     	  	}
+     	  	else {
+     	  		p.sendMessage(ChatColor.RED + "Error no permission");
+     	  		return false;
+     	  	}
+   	 }
+   	 if(cmd.getName().equalsIgnoreCase("god")) {   //god
+    	  if(args.length == 0) {
+    		if(p.hasPermission("StuckInGame.god")) {
+    			if(!(p.isInvulnerable())) {
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "God has been enabled");
+    				p.setInvulnerable(true);
+    				return true;
+    			}
+    			else if(p.isInvulnerable()) { {
+    				p.setInvulnerable(false);
+    				p.sendMessage(ChatColor.LIGHT_PURPLE + "God has been disabled");
+    				return false;
+    			}
+    		}
+    		}
+    		else {
+    			p.sendMessage(ChatColor.RED + "Error no permission");
+    			return false;
+    	  }
+    	  }
+    	  	if((args.length == 1)) {   
+    	  	if (sender.isOp() || sender.hasPermission("StuckInGame.god.other")) {
+    	  	Player target = Bukkit.getPlayer(args[0]);
+    	  	if(target != null) {	
+    	  	if(args[0].equalsIgnoreCase(target.getDisplayName())) {
+    	  	if(!(target.isInvulnerable())) {
+ 			p.sendMessage(ChatColor.LIGHT_PURPLE + "set Godmode for " + target.getDisplayName());
+ 			target.sendMessage(ChatColor.LIGHT_PURPLE + "Godmode was enabled by " + p.getName());
+ 			target.setAllowFlight(true);
+ 			target.setFlying(true);
+    	  	}
+    	  	else if(target.isInvulnerable()) { {
+    	  		p.sendMessage(ChatColor.LIGHT_PURPLE + "Disabled God for "+ target.getDisplayName());
+    	  		target.sendMessage(ChatColor.LIGHT_PURPLE + "Godmode was disabled by " + p.getName());
+    	  		target.setInvulnerable(false);
+    	  		return false;
+    	  	}
+    	  	}
+    	  	}
+    	  	} 
+    	  	else {
+     	  	p.sendMessage(ChatColor.RED +  "The specified name Is invalid");
+     	  	return false;
+    	  	}
+    	  	}
+    	  	else {
+    	  		p.sendMessage(ChatColor.RED + "Error no permission");
+    	  		return false;
+    	  	}
+}
+}
+	return false;
+}
+}

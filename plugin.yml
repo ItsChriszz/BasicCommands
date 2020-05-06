@@ -1,0 +1,66 @@
+author: AssassinTreepig
+name: Test
+main: main.Gamemodes
+version: 1.2
+api: 1.15.2
+commands: 
+  gmc: 
+    description: change Gamemode to Creative
+    aliases: [creative, c]
+  gms:
+    description: change Gamemode to Survival
+    aliases: [s, survival]
+  fly:
+    description: enable flight
+  day:
+    description: enables day
+  night:
+    description: enables night
+  rain:
+    description: enables rain
+  sun:
+    description: make it day
+  ptime:
+    description: changes personal time
+    aliases: [pt]
+  pweather:
+    description: changes personal weather
+    aliases: [pw]
+  god:
+    description: become invincible
+  rtp:
+    description: randomly teleport to a new area
+    aliases: [wilderness]
+  more:
+    description: gives a stack of the held item
+  website:
+    description: gives website
+    aliases: [forums, forum]
+  spawn:
+    description: teleports to spawn
+  permissions:
+    gamemode.gmc:
+    gamemode.gmc.other:
+    gamemode.gms:
+    gamemode.gms.other:
+    StuckInGame.fly:
+    StuckInGame.fly.other:
+    StuckInGame.join.default:
+    StuckInGame.join.vip:
+    StuckInGame.join.vip+:
+    StuckInGame.join.skyraider:
+    StuckIngame.time.day:
+    StuckIngame.time.night:
+    StuckIngame.weather.rain:
+    StuckIngame.weather.sun:
+    StuckInGame.ptime.day:
+    StuckInGame.ptime.reset:
+    StuckInGame.ptime.night:
+    StuckInGame.pweather.rain:
+    StuckInGame.pweather.sun:
+    StuckInGame.pweather.reset:
+    StuckInGame.rtp:
+    StuckInGame.rtp.extend:
+    StuckInGame.website:
+    StuckInGame.more:
+    StuckInGame.spawn:

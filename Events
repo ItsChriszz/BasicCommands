@@ -1,0 +1,52 @@
+package main;
+
+import org.bukkit.ChatColor;
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.Listener;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.event.player.PlayerQuitEvent;
+
+public class Events  implements Listener{
+
+	@EventHandler
+	public final void onPlayerJoin(PlayerJoinEvent event) {
+		Player p = event.getPlayer();
+		World w = p.getWorld();
+		Location locp = event.getPlayer().getLocation();
+		if(p.hasPermission("StuckInGame.join.skyraider")) {
+			event.setJoinMessage(ChatColor.BLUE + "►► " + p.getDisplayName() + " Has joined");
+			w.spawnEntity(locp, EntityType.FIREWORK);
+		}
+		else if(p.hasPermission("StuckInGame.join.vip")) {
+			event.setJoinMessage(ChatColor.GREEN + "►► " + p.getDisplayName() + " Has joined");
+		}
+		else if(p.hasPermission("StuckInGame.join.vip+")) {
+			event.setJoinMessage(ChatColor.GREEN + "►► " + p.getDisplayName() + " Has joined");
+			w.spawnEntity(locp, EntityType.FIREWORK);
+		}
+		else if(p.hasPermission("StuckInGame.join.default")) {
+			event.setJoinMessage(ChatColor.GRAY + p.getDisplayName() + " Has joined");
+		}
+}
+
+	@EventHandler
+	public void  onPlayerLeave(PlayerQuitEvent e) {	
+		Player p = e.getPlayer();
+		if(p.hasPermission("StuckInGame.join.skyraider")) {
+			e.setQuitMessage(ChatColor.BLUE + p.getDisplayName() + " Has left " + " ◄◄");
+		}
+		else if(p.hasPermission("StuckInGame.join.vip")) {
+			e.setQuitMessage(ChatColor.GREEN + p.getDisplayName() + " Has left " + " ◄◄");
+		}
+		else if(p.hasPermission("StuckInGame.join.vip+")) {
+			e.setQuitMessage(ChatColor.GREEN + p.getDisplayName() + " Has left " + " ◄◄");
+		}
+		else if(p.hasPermission("StuckInGame.join.default")) {
+			e.setQuitMessage(ChatColor.GRAY + p.getDisplayName() + " Has left");
+		}
+}
+}
